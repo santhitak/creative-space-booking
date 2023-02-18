@@ -1,12 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
-func Hello(name string) string {
-	result := "Hello " + name
-	return result
+func check(e error) {
+  if e != nil {
+      panic(e)
+  }
 }
 
 func main() {
-	fmt.Println(Hello("api"))
+    fmt.Println("Hello, World!")
+    dat, err := os.ReadFile("./src/cow.txt")
+    check(err)
+    fmt.Print(string(dat))
 }
