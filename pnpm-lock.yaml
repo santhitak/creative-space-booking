@@ -13,6 +13,7 @@ specifiers:
   '@nrwl/react': 15.7.2
   '@nrwl/workspace': 15.7.2
   '@nx-go/nx-go': ^2.7.0
+  '@react-oauth/google': ^0.7.1
   '@testing-library/react': 13.4.0
   '@types/jest': 28.1.1
   '@types/node': 18.11.9
@@ -73,6 +74,7 @@ devDependencies:
   '@nrwl/react': 15.7.2_iewltepy45s5cyhsd2ythsmlha
   '@nrwl/workspace': 15.7.2_3joxs7tzhkrjjacnd53qs32tau
   '@nx-go/nx-go': 2.7.0
+  '@react-oauth/google': 0.7.1_biqbaboplfbrettd7655fr4n2y
   '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
   '@types/jest': 28.1.1
   '@types/node': 18.11.9
@@ -2349,6 +2351,16 @@ packages:
       picocolors: 1.0.0
       tiny-glob: 0.2.9
       tslib: 2.5.0
+    dev: true
+
+  /@react-oauth/google/0.7.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-FIMKcXGAbgUinUSM7VpH9VbA6tZNcXEYgi0jmlHIT1FDs4aON80jZsPUX98/TqKznWZHY4l2J9CTL62bskr7Fg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: true
 
   /@rushstack/eslint-patch/1.2.0:

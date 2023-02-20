@@ -29,6 +29,7 @@
     "@nrwl/react": "15.7.2",
     "@nrwl/workspace": "15.7.2",
     "@nx-go/nx-go": "^2.7.0",
+    "@react-oauth/google": "^0.7.1",
     "@testing-library/react": "13.4.0",
     "@types/jest": "28.1.1",
     "@types/node": "18.11.9",
