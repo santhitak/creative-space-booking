@@ -44,7 +44,7 @@ func main() {
       },
     }
 
-    fmt.Println("Listening at port http://localhost:3000/")
+    fmt.Println("\nListening at port http://localhost:3000/")
 
     go func() {
 		err := serverOne.ListenAndServe()
