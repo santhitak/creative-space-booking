@@ -1,9 +1,8 @@
-import { Hero, Navbar } from '../components';
+import { Hero } from '../components';
 
 export function Index() {
   return (
     <div className="bg-[#f3f3f3]">
-      <Navbar />
       <Hero />
     </div>
   );
