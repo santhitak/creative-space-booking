@@ -1,5 +1,5 @@
 interface Props {
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 const GridLayout = (props: Props) => {

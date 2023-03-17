@@ -3,12 +3,14 @@ import LightButton from './LightButton';
 import Image from 'next/image';
 import GridLayout from './GridLayout';
 import Link from 'next/link';
+import { User } from '../../types';
 
-interface IProps {
-  slot: JSX.Element;
+interface Props {
+  children: React.ReactNode;
+  user?: User;
 }
 
-const Navbar = (props: IProps) => {
+const Navbar = ({ children, user }: Props) => {
   return (
     <div className="w-max-screen w-screen">
       <div className="w-full h-18 sticky top-0 bg-[#f3f3f3] z-40 shadow-md">
@@ -22,12 +24,16 @@ const Navbar = (props: IProps) => {
               <LightButton href="/auth/sign-in" text="Sign in" />
             </div>
             <div className="lg:hidden">
-              <LightButton href="/auth/sign-in" text="Sign in" />
+              {!user ? (
+                <LightButton href="/auth/sign-in" text="Sign in" />
+              ) : (
+                <LightButton href="/auth/sign-in" text={user.firstName} />
+              )}
             </div>
           </div>
         </GridLayout>
       </div>
-      <div className="h-auto w-screen">{props.slot}</div>
+      <div className="h-auto w-screen">{children}</div>
     </div>
   );
 };
