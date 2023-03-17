@@ -1,6 +1,5 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { Navbar } from '../components';
 import '../styles/global.css';
 
 function CustomApp({ Component, pageProps }: AppProps) {
@@ -16,7 +15,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
         <link rel="shortcut icon" href="/images/it_logo.png" />
       </Head>
       <main className="app">
-        <Navbar slot={<Component {...pageProps} />} />
+        <Component {...pageProps} />
       </main>
     </>
   );
