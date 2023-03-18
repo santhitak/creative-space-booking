@@ -20,7 +20,10 @@ const Navbar = ({ children, user }: Props) => {
               <Image width={220} height={44} src="/images/logo.png" alt="" />
             </Link>
             <div className="hidden lg:flex space-x-4">
-              <BlackButton href="/auth/sign-in" text="Room Observation" />
+              <BlackButton
+                href="/auth/sign-in"
+                text={<p>Room Observation</p>}
+              />
               <LightButton href="/auth/sign-in" text="Sign in" />
             </div>
             <div className="lg:hidden">

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 interface Props {
-  text: string;
+  text: JSX.Element;
   href: string;
 }
 

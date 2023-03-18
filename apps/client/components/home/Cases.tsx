@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import BlackButton from '../shared/BlackButton';
 import GridLayout from '../shared/GridLayout';
 
 interface Card {
@@ -60,6 +61,32 @@ const Cases = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="py-14 flex flex-col items-center">
+          <h4 className="text-4xl py-4">
+            <b>Planning</b> to held <b>an appointment?</b>
+          </h4>
+          <BlackButton
+            href="/booking"
+            text={
+              <div className="flex space-x-4 items-center">
+                <p>Book now</p>
+
+                <svg
+                  width="16"
+                  height="11"
+                  viewBox="0 0 16 11"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11.4984 0.5L10.7418 1.34038L13.9518 4.90579H0V6.09429L13.9517 6.09433L10.7418 9.65962L11.4984 10.5L16 5.5L11.4984 0.5Z"
+                    fill="#F3F3F3"
+                  />
+                </svg>
+              </div>
+            }
+          />
         </div>
       </div>
     </GridLayout>
