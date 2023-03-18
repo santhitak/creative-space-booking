@@ -33,7 +33,7 @@ const CasesCard: Card[] = [
 const Cases = () => {
   return (
     <GridLayout>
-      <div className="w-full py-20">
+      <div className="w-full py-20 min-h-[64vh]">
         <div className="flex flex-col items-center space-y-4 py-10">
           <h3 className="text-2xl font-bold text-[#1E1E1E]">
             Booking System Service

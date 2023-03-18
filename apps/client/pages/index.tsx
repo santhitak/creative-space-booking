@@ -1,10 +1,11 @@
-import { Cases, Hero, Navbar } from '../components';
+import { Cases, Hero, Navbar, Footer } from '../components';
 
 export function Index() {
   return (
     <Navbar>
       <Hero />
       <Cases />
+      <Footer />
     </Navbar>
   );
 }
