@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator db {
+  provider = "go run github.com/prisma/prisma-client-go"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id        String    @id
+  firstName String    @db.VarChar(255)
+  lastName  String    @db.VarChar(255)
+  studentId String    @unique @db.VarChar(8)
+  Booking   Booking[]
+}
+
+model Room {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  openTime  DateTime
+  closeTime DateTime
+  booking   Booking[]
+}
+
+model Booking {
+  id        String   @id @unique
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    Int
+  student   User     @relation(fields: [studentId], references: [studentId])
+  studentId String
+  startTime DateTime
+  endTime   DateTime
+  purpose   String
+  createdAt DateTime @default(now())
+
+  @@index([roomId])
+  @@index([studentId])
+}
