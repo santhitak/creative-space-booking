@@ -19,12 +19,12 @@ func check(e error) {
 
 func main() {
 	type Hello struct {
+		Email     string `json:"email"`
 		FirstName string `json:"firstName"`
-		LastName string `json:"lastName"`
-		Phone string `json:"phone"`
+		LastName  string `json:"lastName"`
 	}
 
-	err := godotenv.Load()
+	err := godotenv.Load("../../.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -42,9 +42,9 @@ func main() {
 
 	app.Post("/user", func(ctx *fiber.Ctx) error {
 		p := struct {
-			FirstName string
-			LastName string
-			Phone string
+			Email     string `json:"email"`
+			FirstName string `json:"firstName"`
+			LastName  string `json:"lastName"`
 		}{}
 
 		if err := ctx.BodyParser(&p); err != nil {
@@ -52,9 +52,9 @@ func main() {
 		}
 
 		a := Hello{
+			Email:     p.Email,
 			FirstName: p.FirstName,
-			LastName: p.LastName,
-			Phone: p.Phone,
+			LastName:  p.LastName,
 		}
 		return ctx.Status(http.StatusOK).JSON(a)
 	})
