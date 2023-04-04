@@ -1,27 +1,26 @@
-import { useGoogleLogin } from '@react-oauth/google';
+import { SignInButton } from '@/components/auth';
+import { GridLayout } from '@/components/shared';
 
 const SignIn = () => {
-  // const googleLogin = useGoogleLogin({
-  //   flow: 'auth-code',
-  //   onSuccess: async (codeResponse) => {
-  //     console.log(codeResponse);
-  //     const codeResp = { code: codeResponse.code };
-  //     const code = JSON.stringify(codeResp);
-  //     const tokens = await fetch('http://localhost:3000/auth/signin', {
-  //       method: 'POST',
-  //       body: code,
-  //     });
-
-  //     console.log(tokens);
-  //   },
-  //   onError: (errorResponse) => console.log(errorResponse),
-  // });
-
   return (
-    <div>
-      {/* <button onClick={googleLogin}>Login</button> */}
-      <p>Hello world</p>
-    </div>
+    <GridLayout>
+      <div className="h-full flex flex-col gap-y-10 py-10">
+        <div className="w-full h-4/5 bg-slate-400 rounded-lg"></div>
+        <div className="flex flex-col gap-y-4">
+          <div className="text-3xl font-semibold text-center">
+            <h4>Simply Book</h4>
+            <h4>your room here</h4>
+          </div>
+          <div className="text-gray-600 text-center">
+            <p>Make your reservation easier</p>
+            <p>
+              With <span className="font-semibold">CORB</span>
+            </p>
+          </div>
+        </div>
+        <SignInButton />
+      </div>
+    </GridLayout>
   );
 };
 

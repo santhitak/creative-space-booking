@@ -3,13 +3,7 @@ export type User = {
   email?: string;
   firstName?: string;
   lastName?: string;
-  role: Role;
 };
-
-enum Role {
-  'admin',
-  'user',
-}
 
 export type OAuthUser = {
   sub: string;
