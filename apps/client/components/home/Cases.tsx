@@ -41,7 +41,7 @@ const Cases = () => {
           </h3>
           <p className="text-sm text-[#767676]">What we provide</p>
         </div>
-        <div className="grid grid-cols-4 gap-12">
+        <div className="grid grid-cols-4 gap-12 select-none">
           {CasesCard.map((item: Card, i: number) => (
             <div
               key={i}
@@ -55,14 +55,14 @@ const Cases = () => {
                   alt={item.title}
                 />
                 <p className="font-semibold text-lg">{item.title}</p>
-                <p className="text-[#A6A6A6] font-sm w-4/6 text-center">
+                <p className="text-[#A6A6A6] font-sm w-5/6 text-center">
                   {item.desc}
                 </p>
               </div>
             </div>
           ))}
         </div>
-        <div className="py-14 flex flex-col items-center">
+        <div className="py-24 flex flex-col items-center justify-center">
           <h4 className="text-4xl py-4">
             <b>Planning</b> to held <b>an appointment?</b>
           </h4>
