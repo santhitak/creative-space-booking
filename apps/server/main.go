@@ -19,11 +19,6 @@ func check(e error) {
 }
 
 func main() {
-	type Hello struct {
-		Email     string `json:"email"`
-		FirstName string `json:"firstName"`
-		LastName  string `json:"lastName"`
-	}
 	err := godotenv.Load("../../.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
