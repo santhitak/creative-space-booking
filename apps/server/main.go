@@ -1,6 +1,7 @@
 package main
 
 import (
+	"co-working-space/apps/server/types"
 	"fmt"
 	"log"
 	"net/http"
@@ -19,12 +20,11 @@ func check(e error) {
 
 func main() {
 	type Hello struct {
+		Email     string `json:"email"`
 		FirstName string `json:"firstName"`
-		LastName string `json:"lastName"`
-		Phone string `json:"phone"`
+		LastName  string `json:"lastName"`
 	}
-
-	err := godotenv.Load()
+	err := godotenv.Load("../../.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
@@ -42,19 +42,20 @@ func main() {
 
 	app.Post("/user", func(ctx *fiber.Ctx) error {
 		p := struct {
-			FirstName string
-			LastName string
-			Phone string
+			Email       string `json:"email"`
+			FirstName   string `json:"firstName"`
+			LastName    string `json:"lastName"`
+			IsAvailable bool   `json:"isAvailable"`
 		}{}
 
 		if err := ctx.BodyParser(&p); err != nil {
 			return err
 		}
-
-		a := Hello{
-			FirstName: p.FirstName,
-			LastName: p.LastName,
-			Phone: p.Phone,
+		a := types.User{
+			Email:       p.Email,
+			FirstName:   p.FirstName,
+			LastName:    p.LastName,
+			IsAvailable: p.IsAvailable,
 		}
 		return ctx.Status(http.StatusOK).JSON(a)
 	})
