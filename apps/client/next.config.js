@@ -14,8 +14,8 @@ const nextConfig = {
   },
   env: {
     BACKEND_URL: process.env.BACKEND_URL,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    OAUTH_KEY: process.env.OAUTH_KEY,
+    OAUTH_SECRET: process.env.OAUTH_SECRET,
   },
 };
 
