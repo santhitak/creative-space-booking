@@ -8,7 +8,7 @@ const SignIn = () => {
   return (
     <button
       onClick={() => {
-        router.push(`${url}/login/google`);
+        router.push(`${url}/sign-in/google`);
       }}
       className="bg-[#f7f7f7] border border-[#c4c4c4]/50 rounded-md w-full py-3 flex justify-center items-center space-x-4 px-8"
     >

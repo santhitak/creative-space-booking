@@ -6,7 +6,8 @@
     "client:dev": "nx run client:serve",
     "build": "nx run client:build",
     "server:dev": "nx run server:serve",
-    "server:build": "nx run server:build"
+    "server:build": "nx run server:build",
+    "server:lint": "nx run server:lint"
   },
   "private": true,
   "dependencies": {
