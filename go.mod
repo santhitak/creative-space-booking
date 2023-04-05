@@ -4,8 +4,12 @@ go 1.19
 
 require (
 	github.com/gofiber/fiber/v2 v2.42.0
+	github.com/iancoleman/strcase v0.0.0-20190422225806-e506e3ef7365
 	github.com/markbates/goth v1.76.1
+	github.com/prisma/prisma-client-go v0.17.0
 	github.com/shareed2k/goth_fiber v0.2.9
+	github.com/shopspring/decimal v1.3.1
+	github.com/takuoki/gocase v1.0.0
 )
 
 require (
@@ -23,6 +27,7 @@ require (
 	github.com/imdario/mergo v0.3.15 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/stretchr/testify v1.8.1 // indirect
+	golang.org/x/text v0.8.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 )
