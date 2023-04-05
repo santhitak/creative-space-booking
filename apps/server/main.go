@@ -1,15 +1,19 @@
 package main
 
 import (
-	"co-working-space/apps/server/types"
+	"co-working-space/apps/server/routes"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/markbates/goth"
+	"github.com/markbates/goth/providers/google"
+	"github.com/shareed2k/goth_fiber"
 )
 
 func check(e error) {
@@ -19,41 +23,37 @@ func check(e error) {
 }
 
 func main() {
-	err := godotenv.Load("../../.env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+  err := godotenv.Load(".env")
 
 	dat, err := os.ReadFile("./src/cow.txt")
 	check(err)
 
 	fmt.Print(string(dat))
 	fmt.Printf("\nlistening at http://localhost:%s", os.Getenv("PORT"))
+
 	app := fiber.New()
+
+	app.Use(logger.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "https://gofiber.io, https://gofiber.net, http://localhost:4200",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Server is running!")
 	})
 
-	app.Post("/user", func(ctx *fiber.Ctx) error {
-		p := struct {
-			Email       string `json:"email"`
-			FirstName   string `json:"firstName"`
-			LastName    string `json:"lastName"`
-			IsAvailable bool   `json:"isAvailable"`
-		}{}
+	goth.UseProviders(
+		google.New(os.Getenv("OAUTH_KEY"), os.Getenv("OAUTH_SECRET"), "http://localhost:8000/auth/callback/google"),
+	)
 
-		if err := ctx.BodyParser(&p); err != nil {
-			return err
-		}
-		a := types.User{
-			Email:       p.Email,
-			FirstName:   p.FirstName,
-			LastName:    p.LastName,
-			IsAvailable: p.IsAvailable,
-		}
-		return ctx.Status(http.StatusOK).JSON(a)
-	})
+	app.Get("/sign-in/:provider", goth_fiber.BeginAuthHandler)
 
-	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
+	authRoute := app.Group("/auth")
+
+	authRoute.Add("GET", "/", routes.HealthCheckAuth())
+	authRoute.Add("GET", "/callback/:provider", routes.CompleteAuth())
+	authRoute.Add("GET", "/sign-out", routes.SignOut())
+
+	log.Fatal(app.Listen(":8000"))
 }
