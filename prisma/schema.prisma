@@ -19,8 +19,8 @@ model User {
 model Room {
   id        Int       @id @default(autoincrement())
   name      String    @db.VarChar(255)
-  openTime  DateTime
-  closeTime DateTime
+  openTime  String
+  closeTime String
   booking   Booking[]
 }
 
