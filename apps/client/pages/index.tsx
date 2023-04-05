@@ -1,14 +1,13 @@
-import { Cases, Hero, Navbar, Footer } from '../components';
+import { Cases, Hero } from '../components';
+import { Footer } from '@/components/shared';
 
 export function Index() {
   return (
-    <Navbar>
-      <div className="bg-[#F3F3F3]">
-        <Hero />
-        <Cases />
-        <Footer />
-      </div>
-    </Navbar>
+    <div className="bg-[#f3f3f3]">
+      <Hero />
+      <Cases />
+      <Footer />
+    </div>
   );
 }
 

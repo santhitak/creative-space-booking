@@ -3,10 +3,9 @@ import { GridLayout } from '@/components/shared';
 
 const SignIn = () => {
   return (
-    <GridLayout>
-      <div className="h-full flex flex-col gap-y-10 py-10">
-        <div className="w-full h-4/5 bg-slate-400 rounded-lg"></div>
-        <div className="flex flex-col gap-y-4">
+    <div className="py-20">
+      <GridLayout>
+        <div className="rounded-md flex flex-col justify-center items-stretch md:items-center gap-y-8 p-8">
           <div className="text-3xl font-semibold text-center">
             <h4>Simply Book</h4>
             <h4>your room here</h4>
@@ -17,10 +16,10 @@ const SignIn = () => {
               With <span className="font-semibold">CORB</span>
             </p>
           </div>
+          <SignInButton />
         </div>
-        <SignInButton />
-      </div>
-    </GridLayout>
+      </GridLayout>
+    </div>
   );
 };
 

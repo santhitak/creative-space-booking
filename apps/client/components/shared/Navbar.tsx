@@ -12,7 +12,7 @@ interface Props {
 
 const Navbar = ({ children, user }: Props) => {
   return (
-    <div className="w-max-screen w-screen">
+    <div>
       <div className="w-full h-18 sticky top-0 bg-[#f3f3f3] z-40 shadow-md">
         <GridLayout>
           <div className="py-4 flex justify-between items-center">
@@ -36,7 +36,7 @@ const Navbar = ({ children, user }: Props) => {
           </div>
         </GridLayout>
       </div>
-      <div className="h-auto w-screen">{children}</div>
+      <div className="w-full">{children}</div>
     </div>
   );
 };
