@@ -44,7 +44,7 @@ func main() {
 	})
 
 	goth.UseProviders(
-		google.New(os.Getenv("OAUTH_KEY"), os.Getenv("OAUTH_SECRET"), "http://localhost:8000/auth/callback/google"),
+		google.New(os.Getenv("OAUTH_KEY"), os.Getenv("OAUTH_SECRET"), "http://localhost:8000/auth/callback/google", "email", "profile"),
 	)
 
 	app.Get("/sign-in/:provider", goth_fiber.BeginAuthHandler)
