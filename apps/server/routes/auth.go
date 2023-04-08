@@ -9,6 +9,7 @@ import (
 	"regexp"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/google/uuid"
 	"github.com/shareed2k/goth_fiber"
 )
@@ -50,6 +51,18 @@ func SignOut() fiber.Handler {
 		}
 }
 
+func CollectUserSession(token string) fiber.Handler {
+	return func(c *fiber.Ctx) error {
+	store := session.New()
+		sess, err := store.Get(c)
+		if err != nil {
+				log.Fatal(err)
+		}
+
+		sess.Set("CorbToken", token)
+		return c.SendString("Set Session")
+	}
+}
 
 func HandleUserAuth(firstName string, lastName string, studentId string) error {
 		client := db.NewClient()
@@ -64,13 +77,19 @@ func HandleUserAuth(firstName string, lastName string, studentId string) error {
     }()
 
 		ctx := context.Background()
+		token := uuid.New().String()
 
-		createdUser, err := client.User.CreateOne(
-				db.User.ID.Set(uuid.New().String()),
+		createdUser, err := client.User.UpsertOne(
+			db.User.StudentID.Equals(studentId),
+		).Create(
+				db.User.ID.Set(token),
         db.User.FirstName.Set(firstName),
         db.User.LastName.Set(lastName),
         db.User.StudentID.Set(studentId),
-    ).Exec(ctx)
+    ).Update(
+        db.User.FirstName.Set(firstName),
+        db.User.LastName.Set(lastName),
+		).Exec(ctx)
 
 		result, _ := json.MarshalIndent(createdUser, "", "  ")
 
