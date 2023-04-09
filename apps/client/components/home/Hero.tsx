@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import GridLayout from './shared/GridLayout';
+import GridLayout from '../shared/GridLayout';
 
 const Hero = () => {
   return (
