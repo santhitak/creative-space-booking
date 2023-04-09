@@ -6,13 +6,18 @@ export type User = {
 };
 
 export type Room = {
-  title: string;
+  id: number;
+  name: string;
+  openTime: string;
+  closeTime: string;
   booking: Booking;
 };
 
 export type Booking = {
-  userId: string;
-  date: string;
+  roomId: number;
+  studentId: string;
   startTime: string;
   endTime: string;
+  purpose: string;
+  createdAt: Date;
 };
