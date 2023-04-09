@@ -1,4 +1,4 @@
-import { Cases, Hero } from '../components';
+import { Cases, Hero } from '@/components/home';
 import { Footer } from '@/components/shared';
 
 export function Index() {
