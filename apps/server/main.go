@@ -50,10 +50,14 @@ func main() {
 	app.Get("/sign-in/:provider", goth_fiber.BeginAuthHandler)
 
 	authRoute := app.Group("/auth")
+	bookingRoute := app.Group("/booking")
 
 	authRoute.Add("GET", "/", routes.HealthCheckAuth())
 	authRoute.Add("GET", "/callback/:provider", routes.CompleteAuth())
 	authRoute.Add("GET", "/sign-out", routes.SignOut())
+
+
+	bookingRoute.Add("GET", "/room", routes.GetAllRoom())
 
 	log.Fatal(app.Listen(":8000"))
 }
