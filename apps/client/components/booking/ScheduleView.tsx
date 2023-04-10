@@ -1,4 +1,9 @@
 import { Room } from 'types';
+import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import eventList from 'pages/booking/events';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+const localizer = momentLocalizer(moment);
 
 interface Props {
   room: Room;
@@ -7,6 +12,7 @@ interface Props {
 const ScheduleView = (props: Props) => {
   const { room } = props;
   const date = new Date();
+
   return (
     <div className="w-full">
       <div className="border border-gray-200 rounded-md">
@@ -32,7 +38,21 @@ const ScheduleView = (props: Props) => {
             </div>
           </div>
         </div>
-        <div className="h-[60vh] overflow-y-scroll"></div>
+        <div className="h-[60vh] overflow-y-scroll">
+          <div className="flex">
+            <Calendar
+              localizer={localizer}
+              event={eventList}
+              defaultView={Views.DAY}
+              startAccessor="start"
+              endAccessor="end"
+              defaultDate={moment().toDate()}
+              style={{
+                width: '100%',
+              }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

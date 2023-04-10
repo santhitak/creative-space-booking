@@ -14,7 +14,11 @@ const BookingPage = () => {
       const response = await fetch(`${url}/booking/room`);
       setRoom(await response.json());
     }
-    fetchData();
+    try {
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (

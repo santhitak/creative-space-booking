@@ -13,6 +13,15 @@ export type Room = {
   booking: Booking;
 };
 
+export type CalendarEvent = {
+  id: number;
+  title: string;
+  allDay?: boolean;
+  desc?: string;
+  start: Date;
+  end: Date;
+};
+
 export type Booking = {
   roomId: number;
   studentId: string;
