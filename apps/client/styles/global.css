@@ -25,6 +25,25 @@
   background-color: #a8bbbf;
 }
 
-.rbc-toolbar {
-  padding-top: 1rem;
+.rbc-calendar {
+  padding: 1rem;
+}
+
+.rbc-timeslot-group {
+  background-color: #f1f4ff;
+}
+
+.rbc-current-time-indicator {
+  background-color: #8267fc !important;
+}
+
+.rbc-event {
+  background-color: #8267fc !important;
+  border: 1px solid #ae9ef8 !important;
+  padding: 0.25rem !important;
+}
+
+.rbc-row,
+.rbc-time-header {
+  background-color: #f1f4ff !important;
 }

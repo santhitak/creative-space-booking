@@ -1,5 +1,5 @@
 import { Room } from 'types';
-import { Calendar, Views, momentLocalizer } from 'react-big-calendar';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import eventList from 'pages/booking/events';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -42,8 +42,8 @@ const ScheduleView = (props: Props) => {
           <div className="flex">
             <Calendar
               localizer={localizer}
-              event={eventList}
-              defaultView={Views.DAY}
+              events={eventList}
+              defaultView="day"
               startAccessor="start"
               endAccessor="end"
               defaultDate={moment().toDate()}
