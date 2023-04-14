@@ -22,7 +22,7 @@ const BookingPage = () => {
 
   return (
     <GridLayout>
-      <div className="min-h-[90vh] h-auto w-full flex items-center">
+      <div className="min-h-[90vh] w-auto flex items-center">
         <div className="h-full w-full py-20 flex justify-center">
           {!room && (
             <div>
@@ -30,7 +30,7 @@ const BookingPage = () => {
             </div>
           )}
           {room && (
-            <div className="flex flex-col gap-y-6">
+            <div className="min-w-full flex flex-col gap-y-6">
               <div className="">
                 <RoomListBox
                   room={room}

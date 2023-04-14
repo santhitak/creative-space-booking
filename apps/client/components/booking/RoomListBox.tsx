@@ -17,7 +17,7 @@ export default function RoomListBox(props: Props) {
     <div className="pb-10 w-full">
       <Listbox value={roomData} onChange={setRoomData}>
         <div className="relative mt-1 z-10">
-          <Listbox.Button className="relative w-full cursor-default rounded-lg bg-gray-200/50 border border-gray-300/60 py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm">
+          <Listbox.Button className="relative w-full cursor-default rounded-lg bg-gray-200/50 border border-gray-300/60 py-2 pl-4 font-medium pr-10 text-left shadow-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-300 sm:text-sm">
             <span className="block truncate">{roomData?.name}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <HiChevronUpDown
