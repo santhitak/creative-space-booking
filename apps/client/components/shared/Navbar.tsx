@@ -21,7 +21,14 @@ const Navbar = ({ children, user }: Props) => {
         <GridLayout>
           <div className="py-4 flex justify-between items-center">
             <Link href="/">
-              <Image width={220} height={44} src="/images/logo.png" alt="" />
+              <Image
+                width={200}
+                height={30}
+                src="/images/logo.png"
+                priority
+                style={{ width: '200', height: '30' }}
+                alt=""
+              />
             </Link>
             <div>
               {!user ? (
