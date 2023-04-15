@@ -63,33 +63,6 @@ func SignOut() fiber.Handler {
 	}
 }
 
-// func CollectUserSession(token string) error {
-// 	fiber.Ctx.Redirect
-// 	return nil
-// }
-
-// func CollectUserSession(token string) fiber.Handler {
-
-// 	return func(c *fiber.Ctx) error {
-// 		log.Info(c)
-// 		store := session.New()
-// 		sess, err := store.Get(c)
-// 		if err != nil {
-// 			log.Fatal(err)
-// 		}
-// 		sess.Set("CorbToken", token)
-// 		if err := sess.Save(); err != nil {
-// 			panic(err)
-// 		}
-// 		log.Info(sess)
-// 		return nil
-// 	}
-// }
-
-// func CollectUserSession(c *fiber.Ctx) error {
-
-// }
-
 func HandleUserAuth(firstName string, lastName string, studentId string) error {
 	client := db.NewClient()
 	if err := client.Prisma.Connect(); err != nil {
@@ -152,6 +125,5 @@ func HandlerGetUser(studentID string) error {
 		log.Printf("error occurred: %s", err)
 	}
 	userid = getUser.ID
-	// CollectUserSession(getUser.ID)
 	return nil
 }
