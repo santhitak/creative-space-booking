@@ -2,17 +2,14 @@ import { CalendarEvent } from 'types';
 
 const eventList: CalendarEvent[] = [
   {
-    id: 0,
-    title: 'All Day Event very long title',
-    allDay: true,
-    start: new Date(2023, 3, 10),
-    end: new Date(2023, 3, 11),
+    title: 'Santhita (project)',
+    start: new Date('2023-04-14T02:30:00.000Z'),
+    end: new Date('2023-04-14T03:30:00.000Z'),
   },
   {
-    id: 1,
-    title: 'long title',
-    start: new Date(2023, 3, 13),
-    end: new Date(2023, 3, 14),
+    title: 'Natanon (meeting)',
+    start: new Date('2023-04-14T04:30:00.000Z'),
+    end: new Date('2023-04-14T05:30:00.000Z'),
   },
 ];
 
