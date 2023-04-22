@@ -11,12 +11,12 @@
   },
   "private": true,
   "dependencies": {
-    "@headlessui/react": "^1.7.13",
+    "@headlessui/react": "^1.7.14",
     "@nrwl/next": "15.7.2",
-    "@prisma/client": "^4.12.0",
+    "@prisma/client": "^4.13.0",
     "moment": "^2.29.4",
     "next": "13.1.1",
-    "prisma": "^4.12.0",
+    "prisma": "^4.13.0",
     "react": "18.2.0",
     "react-big-calendar": "^1.6.9",
     "react-dom": "18.2.0",
@@ -47,8 +47,8 @@
     "@types/react-dom": "18.0.9",
     "@types/react-is": "17.0.3",
     "@types/styled-components": "5.1.26",
-    "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.57.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
     "autoprefixer": "^10.4.14",
     "babel-jest": "28.1.1",
     "babel-plugin-styled-components": "1.10.7",
@@ -63,13 +63,13 @@
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "nx": "15.7.2",
-    "postcss": "^8.4.21",
+    "postcss": "^8.4.23",
     "prettier": "^2.8.7",
     "react-test-renderer": "18.2.0",
     "tailwindcss": "^3.3.1",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "~4.8.4",
-    "webpack": "^5.77.0"
+    "webpack": "^5.80.0"
   }
 }
