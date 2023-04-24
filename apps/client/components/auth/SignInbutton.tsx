@@ -1,7 +1,15 @@
+import { useStore } from 'lib/store';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
+const useAuth = () => {
+  return useStore((store) => ({
+    setUser: store.setUser,
+  }));
+};
+
 const SignIn = () => {
+  const { setUser } = useAuth();
   const url = process.env.BACKEND_URL;
   const router = useRouter();
 
