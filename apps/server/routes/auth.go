@@ -49,7 +49,7 @@ func CompleteAuth() fiber.Handler {
 			panic(err)
 		}
 		log.Info(sess.Keys())
-		ctx.Redirect("http://localhost:4200/")
+		ctx.Redirect(`http://localhost:4200/?id=` + userid)
 		return nil
 	}
 }
