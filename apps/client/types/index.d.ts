@@ -29,3 +29,10 @@ export type Booking = {
   purpose: string;
   createdAt: Date;
 };
+
+export interface DateInterface {
+  todayMoment: moment.Moment;
+  tomorrowMoment: moment.Moment;
+  today: string;
+  tomorrow: string;
+}

@@ -3,17 +3,44 @@ import LightButton from './LightButton';
 import Image from 'next/image';
 import GridLayout from './GridLayout';
 import Link from 'next/link';
-import { User } from '../../types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SignInModal } from '../auth';
+import { useStore } from 'lib/store';
+import { Router, useRouter } from 'next/router';
+import Cookies from 'js-cookie';
 
 interface Props {
   children: React.ReactNode;
-  user?: User;
 }
 
-const Navbar = ({ children, user }: Props) => {
+const useAuth = () => {
+  return useStore((store) => ({
+    user: store.user,
+    setUser: store.setUser,
+  }));
+};
+
+const Navbar = ({ children }: Props) => {
+  const router = useRouter();
+  const url = process.env.BACKEND_URL;
+  const { user, setUser } = useAuth();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const cookies = Cookies.get('corb_token');
+    if (cookies) {
+      try {
+        fetch(`${url}/auth/u/${cookies}`).then(async (response) => {
+          const data = await response.json();
+          setUser(data);
+        });
+      } catch (error) {
+        throw Error(error);
+      }
+    } else {
+      console.log('Session ID not found');
+    }
+  }, []);
 
   return (
     <div>
@@ -32,18 +59,14 @@ const Navbar = ({ children, user }: Props) => {
             </Link>
             <div>
               {!user ? (
-                <LightButton
-                  href="#"
-                  action={() => setOpen(true)}
-                  text="Sign in"
-                />
+                <LightButton action={() => setOpen(true)} text="Sign in" />
               ) : (
                 <div className="flex space-x-4">
                   <BlackButton
                     href="/auth/sign-in"
                     text={<p>Room Observation</p>}
                   />
-                  <LightButton href="/auth/sign-in" text={user.firstName} />
+                  <LightButton text={user.studentId} />
                 </div>
               )}
             </div>

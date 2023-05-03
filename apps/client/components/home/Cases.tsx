@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { useEffect } from 'react';
 import BlackButton from '../shared/BlackButton';
 import GridLayout from '../shared/GridLayout';
 
@@ -33,17 +32,6 @@ const CasesCard: Card[] = [
 ];
 
 const Cases = () => {
-  let id = '';
-  if (typeof window === 'undefined') {
-    console.log('sad');
-  } else {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    id = urlParams.get('id');
-  }
-  useEffect(() => {
-    console.log(id);
-  });
   return (
     <GridLayout>
       <div className="w-full py-20 min-h-[64vh]">
@@ -57,7 +45,7 @@ const Cases = () => {
           {CasesCard.map((item: Card, i: number) => (
             <div
               key={i}
-              className="bg-[#FAFAFA] rounded-md col-span-4 md:col-span-1"
+              className="bg-[#FAFAFA] rounded-md col-span-4 md:col-span-2 lg:col-span-1"
             >
               <div className="p-10 flex flex-col items-center space-y-4">
                 <Image
