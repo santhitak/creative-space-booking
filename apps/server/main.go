@@ -53,8 +53,14 @@ func main() {
 	authRoute.Add("GET", "/", routes.HealthCheckAuth())
 	authRoute.Add("GET", "/callback/:provider", routes.CompleteAuth())
 	authRoute.Add("GET", "/sign-out", routes.SignOut())
-	app.Get("/session", func(c *fiber.Ctx) error {
+	authRoute.Add("GET", "/u/:id", func(c *fiber.Ctx) error {
+		err, data := routes.HandlerGetUser(c.Params("id"))
+		if (err != nil) {
+			panic(err)
+		}
+		return c.JSON(data)	})
 
+	app.Get("/session", func(c *fiber.Ctx) error {
 		return c.SendString("Server is running!")
 	})
 

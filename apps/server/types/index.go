@@ -1,11 +1,10 @@
 package types
 
 type User struct {
-	UserId      string
-	Email       string
+	Token      string
+	StudentID       string
 	FirstName   string
 	LastName    string
-	IsAvailable bool
 }
 
 type OAuthUser struct {

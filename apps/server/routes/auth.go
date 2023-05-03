@@ -23,7 +23,6 @@ func HealthCheckAuth() fiber.Handler {
 }
 
 func CompleteAuth() fiber.Handler {
-	store := session.New()
 	return func(ctx *fiber.Ctx) error {
 		user, err := goth_fiber.CompleteUserAuth(ctx)
 		if err != nil {
@@ -39,23 +38,29 @@ func CompleteAuth() fiber.Handler {
 		if err := HandleUserAuth(firstName, lastName, studentId[0]); err != nil {
 			panic(err)
 		}
-		log.Info(userid)
-		sess, err := store.Get(ctx)
-		if err != nil {
-			panic(err)
+
+		cookie := fiber.Cookie{
+			Name:     "corb_token",
+			Value:    studentId[0],
+			HTTPOnly: false,
+      SameSite: "lax",
 		}
-		sess.Set("CorbToken", userid)
-		if err := sess.Save(); err != nil {
-			panic(err)
-		}
-		log.Info(sess.Keys())
-		ctx.Redirect(`http://localhost:4200/?id=` + userid)
-		return nil
+
+		ctx.Cookie(&cookie)
+
+		return ctx.Redirect(`http://localhost:4200/`)
 	}
 }
 
 func SignOut() fiber.Handler {
+	store := session.New()
 	return func(ctx *fiber.Ctx) error {
+		sess, err := store.Get(ctx)
+		if err != nil {
+			panic(err)
+		}
+		sess.Delete("CorbToken")
+
 		if err := goth_fiber.Logout(ctx); err != nil {
 			log.Fatal(err)
 		}
@@ -93,37 +98,38 @@ func HandleUserAuth(firstName string, lastName string, studentId string) error {
 	result, _ := json.MarshalIndent(createdUser, "", "  ")
 
 	fmt.Printf("created user: %s\n", result)
-	HandlerGetUser(studentId)
 	if err != nil {
 		return err
 	}
 
-	return HandlerGetUser(studentId)
+	return err
 }
 
 var userid = ""
 
-func HandlerGetUser(studentID string) error {
-	client := db.NewClient()
-	if err := client.Prisma.Connect(); err != nil {
-		return err
-	}
-
-	defer func() {
-		if err := client.Prisma.Disconnect(); err != nil {
-			panic(err)
+func HandlerGetUser(studentId string) (error, *db.UserModel) {
+		client := db.NewClient()
+		if err := client.Prisma.Connect(); err != nil {
+			return err, nil
 		}
-	}()
 
-	ctx := context.Background()
-	getUser, err := client.User.FindUnique(
-		db.User.StudentID.Equals(studentID),
-	).Exec(ctx)
-	if errors.Is(err, db.ErrNotFound) {
-		log.Printf("no record with id 123")
-	} else if err != nil {
-		log.Printf("error occurred: %s", err)
-	}
-	userid = getUser.ID
-	return nil
+		defer func() {
+			if err := client.Prisma.Disconnect(); err != nil {
+				panic(err)
+			}
+		}()
+
+		ctx := context.Background()
+		getUser, err := client.User.FindUnique(
+			db.User.StudentID.Equals(studentId),
+		).Exec(ctx)
+
+		if errors.Is(err, db.ErrNotFound) {
+			log.Printf("no record with student id %s", studentId)
+		} else if err != nil {
+			log.Printf("error occurred: %s", err)
+		}
+
+		userid = getUser.ID
+	return nil, getUser
 }
