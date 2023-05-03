@@ -14,6 +14,8 @@
     "@headlessui/react": "^1.7.14",
     "@nrwl/next": "15.7.2",
     "@prisma/client": "^4.13.0",
+    "@types/js-cookie": "^3.0.3",
+    "js-cookie": "^3.0.5",
     "moment": "^2.29.4",
     "next": "13.1.1",
     "prisma": "^4.13.0",

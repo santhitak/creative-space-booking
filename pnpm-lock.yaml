@@ -10,6 +10,12 @@ dependencies:
   '@prisma/client':
     specifier: ^4.13.0
     version: 4.13.0(prisma@4.13.0)
+  '@types/js-cookie':
+    specifier: ^3.0.3
+    version: 3.0.3
+  js-cookie:
+    specifier: ^3.0.5
+    version: 3.0.5
   moment:
     specifier: ^2.29.4
     version: 2.29.4
@@ -71,7 +77,7 @@ devDependencies:
     version: 15.7.2(eslint@8.15.0)(nx@15.7.2)(typescript@4.8.4)
   '@nrwl/nx-cloud':
     specifier: latest
-    version: 16.0.1
+    version: 16.0.5
   '@nrwl/react':
     specifier: 15.7.2
     version: 15.7.2(eslint@8.15.0)(nx@15.7.2)(prettier@2.8.7)(typescript@4.8.4)
@@ -2143,10 +2149,10 @@ packages:
       - webpack-cli
     dev: false
 
-  /@nrwl/nx-cloud@16.0.1:
-    resolution: {integrity: sha512-z5Ydlw9BU6DJCvwVI0LPVdMRORAxeHdIS4wzdsrSvoCeVEL6l6RCk1c3bXQ6IHtA2EdVt0yDirMp0Q0ybf5fIQ==}
+  /@nrwl/nx-cloud@16.0.5:
+    resolution: {integrity: sha512-1p82ym8WE9ziejwgPslstn19iV/VkHfHfKr/5YOnfCHQS+NxUf92ogcYhHXtqWLblVZ9Zs4W4pkSXK4e04wCmQ==}
     dependencies:
-      nx-cloud: 16.0.1
+      nx-cloud: 16.0.5
     transitivePeerDependencies:
       - debug
     dev: true
@@ -2790,6 +2796,10 @@ packages:
       jest-matcher-utils: 27.5.1
       pretty-format: 27.5.1
     dev: true
+
+  /@types/js-cookie@3.0.3:
+    resolution: {integrity: sha512-Xe7IImK09HP1sv2M/aI+48a20VX+TdRJucfq4vfRVy6nWN8PYPOEnlMRSgxJAgYQIXJVL8dZ4/ilAM7dWNaOww==}
+    dev: false
 
   /@types/jsdom@16.2.15:
     resolution: {integrity: sha512-nwF87yjBKuX/roqGYerZZM0Nv1pZDMAT5YhOHYeM/72Fic+VEqJh4nyoqoapzJnW3pUlfxPY5FhgsJtM+dRnQQ==}
@@ -3450,6 +3460,16 @@ packages:
   /axe-core@4.7.0:
     resolution: {integrity: sha512-M0JtH+hlOL5pLQwHOLNYZaXuhqmvS8oExsqB1SBYgA4Dk7u/xx+YdGHXaK5pyUfed5mYXdlYiphWq3G8cRi5JQ==}
     engines: {node: '>=4'}
+    dev: true
+
+  /axios@1.1.3:
+    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
+    dependencies:
+      follow-redirects: 1.15.2
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
     dev: true
 
   /axios@1.3.6:
@@ -6559,6 +6579,11 @@ packages:
     hasBin: true
     dev: true
 
+  /js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -7139,16 +7164,17 @@ packages:
     resolution: {integrity: sha512-NHj4rzRo0tQdijE9ZqAx6kYDcoRwYwSYzCA8MY3JzfxlrvEU0jhnhJT9BhqhJs7I/dKcrDm6TyulaRqZPIhN5g==}
     dev: true
 
-  /nx-cloud@16.0.1:
-    resolution: {integrity: sha512-epCxvKVK9niHzZ5TiCJ+93PtXcZmXqkITiqV/qwihJEM4xY4H16qYGYN76Y8sF7dRYC+vlYE5WgFwuGlPXo2Fw==}
+  /nx-cloud@16.0.5:
+    resolution: {integrity: sha512-13P7r0aKikjBtmdZrNorwXzVPeVIV4MLEwqGY+DEG6doLBtI5KqEQk/d5B5l2dCF2BEi/LXEmLYCmf9gwbOJ+Q==}
     hasBin: true
     dependencies:
-      '@nrwl/nx-cloud': 16.0.1
-      axios: 1.3.6
+      '@nrwl/nx-cloud': 16.0.5
+      axios: 1.1.3
       chalk: 4.1.2
       dotenv: 10.0.0
       fs-extra: 11.1.1
       node-machine-id: 1.1.12
+      open: 8.4.2
       strip-json-comments: 3.1.1
       tar: 6.1.11
       yargs-parser: 21.1.1
