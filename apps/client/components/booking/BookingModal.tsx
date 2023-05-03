@@ -1,6 +1,6 @@
 import { Transition, Dialog } from '@headlessui/react';
-import { Fragment, useRef } from 'react';
-import { Room } from 'types';
+import { Fragment, useRef, useState } from 'react';
+import { DateInterface, Room } from 'types';
 import PurposeRadio from './PurposeRadio';
 import { BsFillArrowRightCircleFill } from 'react-icons/bs';
 
@@ -8,6 +8,7 @@ interface Props {
   room: Room;
   open: boolean;
   setOpen: (open: boolean) => void;
+  dateMoment: DateInterface;
 }
 
 export interface RadioChoice {
@@ -27,7 +28,7 @@ const purpose: RadioChoice[] = [
 ];
 
 const BookingModal = (props: Props) => {
-  const { open, setOpen, room } = props;
+  const { open, setOpen, room, dateMoment } = props;
   const cancelButtonRef = useRef(null);
 
   return (
@@ -75,14 +76,17 @@ const BookingModal = (props: Props) => {
                         <p className="font-semibold text-[#1b1b1b]">
                           Pick date
                         </p>
+                        <p>{dateMoment.todayMoment.format()}</p>
                         <div className="flex gap-x-2 py-2 border-gray-100 bg-gray-200/70 border rounded-md">
                           <p className="pl-2">From</p>
                           <input
                             type="datetime-local"
                             name=""
                             id=""
-                            min="2023-04-15T09:00:00"
-                            max="2023-04-16T21:00:00"
+                            value={dateMoment.todayMoment.format()}
+                            max={
+                              dateMoment.tomorrowMoment.format().split('T')[0]
+                            }
                             className="bg-gray-200/30 pr-2"
                           />
                         </div>
@@ -92,8 +96,10 @@ const BookingModal = (props: Props) => {
                             type="datetime-local"
                             name=""
                             id=""
-                            min="2023-04-15T09:00:00"
-                            max="2023-04-16T21:00:00"
+                            value={dateMoment.todayMoment.format()}
+                            max={
+                              dateMoment.tomorrowMoment.format().split('T')[0]
+                            }
                             className="bg-gray-200/30 pr-2"
                           />
                         </div>

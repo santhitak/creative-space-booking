@@ -1,6 +1,6 @@
-import { Room } from 'types';
+import { DateInterface, Room } from 'types';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import eventList from 'pages/booking/events';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useState } from 'react';
@@ -16,7 +16,7 @@ const ScheduleView = (props: Props) => {
   const date = new Date();
   const [openBooking, setOpenBooking] = useState(false);
   const [currentDateShow, setCurrentDateShow] = useState(false);
-  const dateMoment = {
+  const dateMoment: DateInterface = {
     todayMoment: moment(),
     tomorrowMoment: moment().clone().add(1, 'days'),
     today: moment().format('LL'),
@@ -29,26 +29,12 @@ const ScheduleView = (props: Props) => {
         <div className=" bg-gray-100/80 px-6 py-4 rounded-t-md justify-between grid gap-2 md:flex">
           <div className="space-x-2 items-center divide-x gap-x-2 flex">
             <div>
-              <p className="font-semibold">
-                {!currentDateShow ? dateMoment.today : dateMoment.tomorrow}
-              </p>
+              <p className="font-semibold">{dateMoment.today}</p>
               <p>
                 {!currentDateShow
                   ? date.toLocaleDateString('en-th', { weekday: 'long' })
                   : ''}
               </p>
-            </div>
-            <div className="pl-4">
-              <button
-                className="border bg-gray-300 py-2 text-gray-600 font-semibold px-4 rounded-md"
-                onClick={() => {
-                  !currentDateShow
-                    ? setCurrentDateShow(true)
-                    : setCurrentDateShow(false);
-                }}
-              >
-                {!currentDateShow ? 'Next' : 'Prev'}
-              </button>
             </div>
           </div>
           <div className="flex items-center divide-x gap-x-4">
@@ -83,7 +69,12 @@ const ScheduleView = (props: Props) => {
             />
           </div>
         </div>
-        <BookingModal open={openBooking} setOpen={setOpenBooking} room={room} />
+        <BookingModal
+          open={openBooking}
+          setOpen={setOpenBooking}
+          room={room}
+          dateMoment={dateMoment}
+        />
       </div>
     </div>
   );

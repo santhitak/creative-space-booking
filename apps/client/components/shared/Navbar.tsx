@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { SignInModal } from '../auth';
 import { useStore } from 'lib/store';
-import { Router, useRouter } from 'next/router';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 interface Props {
   children: React.ReactNode;
@@ -21,13 +21,13 @@ const useAuth = () => {
 };
 
 const Navbar = ({ children }: Props) => {
-  const router = useRouter();
   const url = process.env.BACKEND_URL;
   const { user, setUser } = useAuth();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const cookies = Cookies.get('corb_token');
+    console.log(cookies);
     if (cookies) {
       try {
         fetch(`${url}/auth/u/${cookies}`).then(async (response) => {
@@ -41,6 +41,11 @@ const Navbar = ({ children }: Props) => {
       console.log('Session ID not found');
     }
   }, []);
+
+  const handleSignout = () => {
+    setUser(null);
+    Cookies.remove('corb_token');
+  };
 
   return (
     <div>
@@ -62,10 +67,7 @@ const Navbar = ({ children }: Props) => {
                 <LightButton action={() => setOpen(true)} text="Sign in" />
               ) : (
                 <div className="flex space-x-4">
-                  <BlackButton
-                    href="/auth/sign-in"
-                    text={<p>Room Observation</p>}
-                  />
+                  <BlackButton href="/booking" text={<p>Room Observation</p>} />
                   <LightButton text={user.studentId} />
                 </div>
               )}
