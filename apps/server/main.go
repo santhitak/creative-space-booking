@@ -65,6 +65,12 @@ func main() {
 	})
 
 	bookingRoute.Add("GET", "/room", routes.GetAllRoom())
+	bookingRoute.Add("GET", "/bookin", func(c *fiber.Ctx) error {
+		data := routes.HandlerAddBooking("63070175")
+		if (err != nil) {
+			panic(err)
+		}
+		return c.JSON(data)	})
 
 	log.Fatal(app.Listen(":8000"))
 }
