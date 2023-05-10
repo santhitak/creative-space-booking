@@ -12,7 +12,6 @@ import (
 	"github.com/charmbracelet/log"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
-	"github.com/google/uuid"
 	"github.com/shareed2k/goth_fiber"
 )
 
@@ -81,12 +80,10 @@ func HandleUserAuth(firstName string, lastName string, studentId string) error {
 	}()
 
 	ctx := context.Background()
-	token := uuid.New().String()
 
 	createdUser, err := client.User.UpsertOne(
 		db.User.StudentID.Equals(studentId),
 	).Create(
-		db.User.ID.Set(token),
 		db.User.FirstName.Set(firstName),
 		db.User.LastName.Set(lastName),
 		db.User.StudentID.Set(studentId),
