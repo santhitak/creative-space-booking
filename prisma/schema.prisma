@@ -4,11 +4,11 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("AWS_BD_ENDPOINT")
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id        String    @id
+  id        String    @id @default(uuid())
   firstName String    @db.VarChar(255)
   lastName  String    @db.VarChar(255)
   studentId String    @unique @db.VarChar(8)
@@ -24,7 +24,7 @@ model Room {
 }
 
 model Booking {
-  id        String   @id @unique
+  id        String   @id @default(uuid())
   room      Room     @relation(fields: [roomId], references: [id])
   roomId    Int
   student   User     @relation(fields: [studentId], references: [studentId])
