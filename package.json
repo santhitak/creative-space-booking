@@ -15,7 +15,7 @@
     "@nrwl/next": "15.7.2",
     "@prisma/client": "^4.13.0",
     "@types/js-cookie": "^3.0.3",
-    "js-cookie": "^3.0.5",
+    "cookies-next": "^2.1.1",
     "moment": "^2.29.4",
     "next": "13.1.1",
     "prisma": "^4.13.0",
@@ -26,8 +26,7 @@
     "react-is": "18.2.0",
     "rrule": "^2.7.2",
     "styled-components": "5.3.6",
-    "tslib": "^2.5.0",
-    "zustand": "^4.3.7"
+    "tslib": "^2.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.4",
