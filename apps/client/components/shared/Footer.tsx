@@ -26,11 +26,11 @@ const FooterContent: Footer[] = [
         title: 'Services',
         item: [
           {
-            href: '/auth/sign-in',
+            href: '/booking',
             appeared: 'Booking',
           },
           {
-            href: '/auth/sign-in',
+            href: '/scheduling',
             appeared: 'Scheduling',
           },
         ],
@@ -71,7 +71,11 @@ const Footer = () => {
                   <p className="font-semibold">{v.title}</p>
                   <div className="flex flex-col">
                     {v.item.map((li: Items, k: number) => (
-                      <Link href={li.href} key={k}>
+                      <Link
+                        href={li.href}
+                        key={k}
+                        className="hover:underline underline-offset-2"
+                      >
                         {li.appeared}
                       </Link>
                     ))}
