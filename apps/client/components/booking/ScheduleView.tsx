@@ -1,7 +1,13 @@
 import { DateInterface, Room } from 'types';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment, { Moment } from 'moment';
-import eventList from 'pages/booking/events';
+import moment from 'moment';
+import {
+  eventListCreative,
+  eventListCreative2,
+  eventListPeer1,
+  eventListPeer2,
+  eventListPeer3,
+} from 'pages/booking/events';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useState } from 'react';
 import BookingModal from './BookingModal';
@@ -11,9 +17,9 @@ interface Props {
   room: Room;
 }
 
-const ScheduleView = (props: Props) => {
-  const { room } = props;
+const ScheduleView = ({ room }: Props) => {
   const date = new Date();
+  console.log(room);
   const [openBooking, setOpenBooking] = useState(false);
   const [currentDateShow, setCurrentDateShow] = useState(false);
   const dateMoment: DateInterface = {
@@ -22,6 +28,17 @@ const ScheduleView = (props: Props) => {
     today: moment().format('LL'),
     tomorrow: moment().clone().add(1, 'days').format('LL'),
   };
+
+  const eventData =
+    room.name === 'Peer Tutor Room 1'
+      ? eventListPeer1
+      : room.name === 'Peer Tutor Room 2'
+      ? eventListPeer2
+      : room.name === 'Peer Tutor Room 3'
+      ? eventListPeer3
+      : room.name === 'Creative and Ideation Room 1'
+      ? eventListCreative
+      : eventListCreative2;
 
   return (
     <div className="w-full">
@@ -55,7 +72,7 @@ const ScheduleView = (props: Props) => {
           <div className="flex">
             <Calendar
               localizer={localizer}
-              events={eventList}
+              events={eventData}
               defaultView="day"
               startAccessor="start"
               endAccessor="end"
