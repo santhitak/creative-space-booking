@@ -1,10 +1,10 @@
 package types
 
 type User struct {
-	Token      string
-	StudentID       string
-	FirstName   string
-	LastName    string
+	Token     string `json:"token"`
+	StudentID string `json:"studentId"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
 }
 
 type OAuthUser struct {

@@ -53,12 +53,14 @@ func main() {
 	authRoute.Add("GET", "/", routes.HealthCheckAuth())
 	authRoute.Add("GET", "/callback/:provider", routes.CompleteAuth())
 	authRoute.Add("GET", "/sign-out", routes.SignOut())
+	authRoute.Add("GET", "/test", routes.Test("63070045"))
 	authRoute.Add("GET", "/u/:id", func(c *fiber.Ctx) error {
 		err, data := routes.HandlerGetUser(c.Params("id"))
-		if (err != nil) {
+		if err != nil {
 			panic(err)
 		}
-		return c.JSON(data)	})
+		return c.JSON(data)
+	})
 
 	app.Get("/session", func(c *fiber.Ctx) error {
 		return c.SendString("Server is running!")
@@ -67,10 +69,11 @@ func main() {
 	bookingRoute.Add("GET", "/room", routes.GetAllRoom())
 	bookingRoute.Add("GET", "/bookin", func(c *fiber.Ctx) error {
 		data := routes.HandlerAddBooking("63070175")
-		if (err != nil) {
+		if err != nil {
 			panic(err)
 		}
-		return c.JSON(data)	})
+		return c.JSON(data)
+	})
 
 	log.Fatal(app.Listen(":8000"))
 }
