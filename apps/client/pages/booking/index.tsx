@@ -66,11 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const cookie = getCookies({ req, res });
   const studentId = cookie[`corb_token`];
 
-  const data = await fetch(`${url}/auth/u/${studentId}`, {
-    headers: {
-      Authorization: `Bearer ${studentId}`,
-    },
-  });
+  const data = await fetch(`${url}/auth/u/${studentId}`);
 
   const user = await data.json();
 
