@@ -1,11 +1,10 @@
 package routes
 
 import (
+	"co-working-space/apps/server/types"
 	"co-working-space/prisma/db"
 	"context"
-	"encoding/json"
 	"errors"
-	"fmt"
 	_ "reflect"
 	"regexp"
 
@@ -13,8 +12,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/shareed2k/goth_fiber"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
+// @tcp(aws.connect.psdb.cloud)/corb?tls=true
+// 0zm3mo8ajzd5sebzhil7
+// pscale_pw_59tSNJAzIwobObDM3sYDafb00DMlUV5KD4sICTz7dEq
 func HealthCheckAuth() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		return ctx.SendString("Auth server is running!")
@@ -42,7 +46,7 @@ func CompleteAuth() fiber.Handler {
 			Name:     "corb_token",
 			Value:    studentId[0],
 			HTTPOnly: false,
-      SameSite: "lax",
+			SameSite: "lax",
 		}
 
 		ctx.Cookie(&cookie)
@@ -67,10 +71,60 @@ func SignOut() fiber.Handler {
 	}
 }
 
-func HandleUserAuth(firstName string, lastName string, studentId string) error {
+func HandleUserAuth(firstName string, lastName string, studentId string) fiber.Handler {
+
+	return func(ctx *fiber.Ctx) error {
+		db, err := gorm.Open(mysql.Open("0zm3mo8ajzd5sebzhil7:pscale_pw_59tSNJAzIwobObDM3sYDafb00DMlUV5KD4sICTz7dEq@tcp(aws.connect.psdb.cloud)/corb?tls=true"), &gorm.Config{})
+		if err != nil {
+			panic("failed to connect to database")
+		}
+		list := []types.User{}
+		p := struct {
+			Token     string
+			StudentID string
+			FirstName string
+			LastName  string
+		}{}
+		if err := ctx.BodyParser(&p); err != nil {
+			return err
+		}
+		a := types.User{
+			Token:     p.Token,
+			StudentID: p.StudentID,
+			FirstName: p.FirstName,
+			LastName:  p.LastName,
+		}
+		db.Create(&a)
+		return ctx.SendString("Auth server is running!")
+	}
+
+	// createdUser, err := client.User.UpsertOne(
+	// 	db.User.StudentID.Equals(studentId),
+	// ).Create(
+	// 	db.User.FirstName.Set(firstName),
+	// 	db.User.LastName.Set(lastName),
+	// 	db.User.StudentID.Set(studentId),
+	// ).Update(
+	// 	db.User.FirstName.Set(firstName),
+	// 	db.User.LastName.Set(lastName),
+	// ).Exec(ctx)
+
+	// result, _ := json.MarshalIndent(createdUser, "", "  ")
+
+	// fmt.Printf("created user: %s\n", result)
+	// if err != nil {
+	// 	return err
+	// }
+
+	// return err
+}
+
+var userid = ""
+
+func HandlerGetUser(studentId string) (error, *db.UserModel) {
 	client := db.NewClient()
 	if err := client.Prisma.Connect(); err != nil {
-		return err
+		return err, nil
 	}
 
 	defer func() {
@@ -80,53 +134,16 @@ func HandleUserAuth(firstName string, lastName string, studentId string) error {
 	}()
 
 	ctx := context.Background()
-
-	createdUser, err := client.User.UpsertOne(
+	getUser, err := client.User.FindUnique(
 		db.User.StudentID.Equals(studentId),
-	).Create(
-		db.User.FirstName.Set(firstName),
-		db.User.LastName.Set(lastName),
-		db.User.StudentID.Set(studentId),
-	).Update(
-		db.User.FirstName.Set(firstName),
-		db.User.LastName.Set(lastName),
 	).Exec(ctx)
 
-	result, _ := json.MarshalIndent(createdUser, "", "  ")
-
-	fmt.Printf("created user: %s\n", result)
-	if err != nil {
-		return err
+	if errors.Is(err, db.ErrNotFound) {
+		log.Printf("no record with student id %s", studentId)
+	} else if err != nil {
+		log.Printf("error occurred: %s", err)
 	}
 
-	return err
-}
-
-var userid = ""
-
-func HandlerGetUser(studentId string) (error, *db.UserModel) {
-		client := db.NewClient()
-		if err := client.Prisma.Connect(); err != nil {
-			return err, nil
-		}
-
-		defer func() {
-			if err := client.Prisma.Disconnect(); err != nil {
-				panic(err)
-			}
-		}()
-
-		ctx := context.Background()
-		getUser, err := client.User.FindUnique(
-			db.User.StudentID.Equals(studentId),
-		).Exec(ctx)
-
-		if errors.Is(err, db.ErrNotFound) {
-			log.Printf("no record with student id %s", studentId)
-		} else if err != nil {
-			log.Printf("error occurred: %s", err)
-		}
-
-		userid = getUser.ID
+	userid = getUser.ID
 	return nil, getUser
 }
