@@ -7,7 +7,7 @@ import {
   eventListPeer1,
   eventListPeer2,
   eventListPeer3,
-} from 'pages/booking/events';
+} from 'data/events';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useState } from 'react';
 import BookingModal from './BookingModal';

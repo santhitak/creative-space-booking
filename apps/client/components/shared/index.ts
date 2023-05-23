@@ -4,4 +4,3 @@ export { default as Footer } from './Footer';
 export { default as LightButton } from './LightButton';
 export { default as BlackButton } from './BlackButton';
 export { default as Loading } from './Loading';
-export { default as UserMenu } from './UserMenu';
