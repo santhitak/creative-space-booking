@@ -3,8 +3,8 @@ import { CalendarEvent } from 'types';
 const eventList: CalendarEvent[] = [
   {
     title: 'Santhita (project)',
-    start: new Date('2023-04-14T02:30:00.000Z'),
-    end: new Date('2023-04-14T03:30:00.000Z'),
+    start: new Date('2023-05-05T02:30:00.000Z'),
+    end: new Date('2023-05-05T03:30:00.000Z'),
   },
   {
     title: 'Natanon (meeting)',

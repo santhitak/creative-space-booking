@@ -3,48 +3,24 @@ import LightButton from './LightButton';
 import Image from 'next/image';
 import GridLayout from './GridLayout';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SignInModal } from '../auth';
-import { useStore } from 'lib/store';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import { User } from 'types';
 
 interface Props {
   children: React.ReactNode;
+  userData: User;
 }
 
-const useAuth = () => {
-  return useStore((store) => ({
-    user: store.user,
-    setUser: store.setUser,
-  }));
-};
-
-const Navbar = ({ children }: Props) => {
-  const url = process.env.BACKEND_URL;
-  const { user, setUser } = useAuth();
+const Navbar = ({ children, userData }: Props) => {
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const cookies = Cookies.get('corb_token');
-    console.log(cookies);
-    if (cookies) {
-      try {
-        fetch(`${url}/auth/u/${cookies}`).then(async (response) => {
-          const data = await response.json();
-          setUser(data);
-        });
-      } catch (error) {
-        throw Error(error);
-      }
-    } else {
-      console.log('Session ID not found');
-    }
-  }, []);
-
-  const handleSignout = () => {
-    setUser(null);
-    Cookies.remove('corb_token');
+  const [user] = useState<User>(userData);
+  const router = useRouter();
+  const handleSignOut = async () => {
+    await fetch('/api/signout', {
+      method: 'POST',
+    }).then(() => router.push('/'));
   };
 
   return (
@@ -69,6 +45,10 @@ const Navbar = ({ children }: Props) => {
                 <div className="flex space-x-4">
                   <BlackButton href="/booking" text={<p>Room Observation</p>} />
                   <LightButton text={user.studentId} />
+                  <LightButton
+                    text={'Sign out'}
+                    action={() => handleSignOut()}
+                  />
                 </div>
               )}
             </div>
