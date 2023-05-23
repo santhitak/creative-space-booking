@@ -17,6 +17,7 @@ const Navbar = ({ children, userData }: Props) => {
   const [open, setOpen] = useState(false);
   const [user] = useState<User>(userData);
   const router = useRouter();
+
   const handleSignOut = async () => {
     await fetch('/api/signout', {
       method: 'POST',

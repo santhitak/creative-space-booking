@@ -14,6 +14,7 @@ const nextConfig = {
   },
   env: {
     BACKEND_URL: process.env.BACKEND_URL,
+    LOCAL_BACKEND_URL: process.env.LOCAL_BACKEND_URL,
     CALENDAR_ID: process.env.CALENDAR_ID,
     API_KEY: process.env.API_KEY,
     OAUTH_KEY: process.env.OAUTH_KEY,
