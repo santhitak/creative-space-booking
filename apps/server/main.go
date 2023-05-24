@@ -23,7 +23,7 @@ func check(e error) {
 }
 
 func main() {
-	err := godotenv.Load(".env")
+	err := godotenv.Load()
 
 	dat, err := os.ReadFile("./src/cow.txt")
 	check(err)
@@ -53,7 +53,7 @@ func main() {
 	authRoute.Add("GET", "/", routes.HealthCheckAuth())
 	authRoute.Add("GET", "/callback/:provider", routes.CompleteAuth())
 	authRoute.Add("GET", "/sign-out", routes.SignOut())
-	authRoute.Add("GET", "/test", routes.Test("63070045"))
+	authRoute.Add("GET", "/test", routes.Test("63070025"))
 	authRoute.Add("GET", "/u/:id", func(c *fiber.Ctx) error {
 		err, data := routes.HandlerGetUser(c.Params("id"))
 		if err != nil {
@@ -67,13 +67,7 @@ func main() {
 	})
 
 	bookingRoute.Add("GET", "/room", routes.GetAllRoom())
-	bookingRoute.Add("GET", "/bookin", func(c *fiber.Ctx) error {
-		data := routes.HandlerAddBooking("63070175")
-		if err != nil {
-			panic(err)
-		}
-		return c.JSON(data)
-	})
+	bookingRoute.Add("POST", "/create", routes.HandlerAddBooking("63070175", "1", "1980-01-01T00:00:00.000Z", "1980-01-01T02:00:00.000Z", "Homeword"))
 
 	log.Fatal(app.Listen(":8000"))
 }
