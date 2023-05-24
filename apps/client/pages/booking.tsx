@@ -44,7 +44,10 @@ const BookingPage = ({ userData }: IProps) => {
                     roomData={!roomData ? room[0] : roomData}
                     setRoomData={setRoomData}
                   />
-                  <ScheduleView room={!roomData ? room[0] : roomData} />
+                  <ScheduleView
+                    room={!roomData ? room[0] : roomData}
+                    userData={user}
+                  />
                 </div>
               </div>
             )}
