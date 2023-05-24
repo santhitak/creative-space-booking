@@ -57,7 +57,7 @@ func CompleteAuth() fiber.Handler {
 		if err != nil {
 			panic("failed to connect to database")
 		}
-		db.Table("User").Where("studentId = ?", studentId[0]).Scan(&list)
+		db.Table("users").Where("studentId = ?", studentId[0]).Scan(&list)
 		if reflect.ValueOf(list).Len() == 0 {
 			token := uuid.New().String()
 			a := types.User{
@@ -67,7 +67,6 @@ func CompleteAuth() fiber.Handler {
 				StudentID: studentId[0],
 			}
 			db.Create(&a)
-			return nil
 		}
 
 		cookie := fiber.Cookie{

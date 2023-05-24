@@ -2,8 +2,10 @@ package main
 
 import (
 	"co-working-space/apps/server/routes"
+	"co-working-space/apps/server/types"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -14,6 +16,8 @@ import (
 	"github.com/markbates/goth"
 	"github.com/markbates/goth/providers/google"
 	"github.com/shareed2k/goth_fiber"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 func check(e error) {
@@ -55,11 +59,14 @@ func main() {
 	authRoute.Add("GET", "/sign-out", routes.SignOut())
 	authRoute.Add("GET", "/test", routes.Test("63070025"))
 	authRoute.Add("GET", "/u/:id", func(c *fiber.Ctx) error {
-		err, data := routes.HandlerGetUser(c.Params("id"))
+		list := types.User{}
+		db, err := gorm.Open(mysql.Open(os.Getenv("DATABASE_USERNAME")+":"+os.Getenv("DATABASE_PASSWORD")+"@tcp"+"("+os.Getenv("DATABASE_HOST")+")"+"/"+os.Getenv("DATABSE_NAME")+"?tls=true"), &gorm.Config{TranslateError: true})
 		if err != nil {
-			panic(err)
+			panic("failed to connect to database")
 		}
-		return c.JSON(data)
+		db.Table("users").Where("studentId = ?", c.Params("id")).Scan(&list)
+
+		return c.Status(http.StatusOK).JSON(list)
 	})
 
 	app.Get("/session", func(c *fiber.Ctx) error {
