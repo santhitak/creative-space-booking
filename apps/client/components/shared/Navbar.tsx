@@ -38,7 +38,7 @@ const Navbar = ({ children, userData }: Props) => {
 
   return (
     <div>
-      <div className="w-full h-18 sticky top-0 bg-[#f3f3f3] z-40 shadow-md">
+      <div className="w-full h-18 sticky top-0 bg-[#f3f3f3] shadow-md">
         <GridLayout>
           <div className="py-4 flex justify-between items-center">
             <Link href="/">
@@ -53,15 +53,15 @@ const Navbar = ({ children, userData }: Props) => {
             </Link>
             <Menu as="div" className="relative inline-block">
               <div>
-                <Menu.Button className="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium text-[#1d1d1d] hover:bg-opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 gap-2">
+                <Menu.Button className="inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium hover:bg-opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 gap-2">
                   {user ? (
-                    <div className="px-4 py-2 bg-[#1d1d1d] rounded-md text-[#f1f1f1] flex items-center gap-1">
+                    <div className="px-4 py-2 bg-blue-800 rounded-md text-[#f1f1f1] flex items-center gap-1">
                       <p>{user.studentId}</p>
                       <RiArrowDownSLine className="w-5 h-5" />
                     </div>
                   ) : (
                     <div
-                      className="px-6 py-2 bg-[#1d1d1d] rounded-md text-[#f1f1f1]"
+                      className="px-6 py-2 bg-blue-800 rounded-md text-[#f1f1f1]"
                       onClick={() => setOpen(true)}
                     >
                       <p>Sign in</p>
