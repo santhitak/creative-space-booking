@@ -45,10 +45,17 @@ span.rbc-label {
 }
 
 .rbc-event {
-  background-color: #2f48d1 !important;
-  border: 1px solid #9eacf8 !important;
-  padding: 0.25rem !important;
+  background-color: #264ac2 !important;
+  color: #ececec !important;
+  font-weight: 600;
+  border: 2px solid #3e57a8 !important;
+  padding: 0.5rem !important;
 }
+
+/*
+.rbc-event:hover::before {
+  content: 'test';
+} */
 
 .rbc-event .rbc-event-content {
   font-size: 14px;
