@@ -25,6 +25,7 @@ const ScheduleView = ({ room, userData }: Props) => {
   const [openBooking, setOpenBooking] = useState(false);
   const [currentDateShow, setCurrentDateShow] = useState(false);
   const [booking, setBooking] = useState([]);
+  const [bookingNew, setBookingNew] = useState([]);
   const dateMoment: DateInterface = {
     todayMoment: moment(),
     tomorrowMoment: moment().clone().add(1, 'days'),
@@ -32,28 +33,24 @@ const ScheduleView = ({ room, userData }: Props) => {
     tomorrow: moment().clone().add(1, 'days').format('LL'),
   };
 
+  console.log(bookingNew);
   useEffect(() => {
     async function getBooking() {
       const response = await fetch(`${url}/booking/all/${room.id}`);
       const data = await response.json();
 
       setBooking(data);
-      console.log(data);
+
+      const arr = data.map((v) => ({
+        start: new Date(v.start),
+        end: new Date(v.end),
+        title: `${v.studentId} (${v.purpose}) `,
+      }));
+      setBookingNew(arr);
     }
 
     getBooking();
   }, [room.id]);
-
-  const eventData =
-    room.name === 'Peer Tutor Room 1'
-      ? eventListPeer1
-      : room.name === 'Peer Tutor Room 2'
-      ? eventListPeer2
-      : room.name === 'Peer Tutor Room 3'
-      ? eventListPeer3
-      : room.name === 'Creative and Ideation Room 1'
-      ? eventListCreative
-      : eventListCreative2;
 
   return (
     <div className="w-full">
@@ -87,7 +84,7 @@ const ScheduleView = ({ room, userData }: Props) => {
           <div className="flex">
             <Calendar
               localizer={localizer}
-              events={booking}
+              events={bookingNew}
               defaultView="day"
               startAccessor="start"
               endAccessor="end"

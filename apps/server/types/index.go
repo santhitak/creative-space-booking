@@ -34,8 +34,9 @@ type Booking struct {
 	Id        string    `json:"id"`
 	RoomId    int       `gorm:"column:roomId" json:"roomId"`
 	StudentID string    `gorm:"column:studentId" json:"studentId"`
-	StartTime string    `gorm:"column:startTime" json:"startTime"`
-	EndTime   string    `gorm:"column:endTime" json:"endTime"`
+	StartTime string    `gorm:"column:start" json:"start"`
+	EndTime   string    `gorm:"column:end" json:"end"`
+	Title   string    `gorm:"column:title" json:"title"`
 	Purpose   string    `gorm:"column:purpose" json:"purpose"`
 	CreatedAt time.Time `gorm:"column:createdAt" json:"createdAt"`
 }

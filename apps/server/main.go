@@ -87,6 +87,7 @@ func main() {
 			StartTime string `json:"startTime"`
 			EndTime   string `json:"endTime"`
 			Purpose   string `json:"purpose"`
+			Title   string `json:"title"`
 		}{}
 		if err := c.BodyParser(&p); err != nil {
 			return err
@@ -98,6 +99,7 @@ func main() {
 			StartTime: p.StartTime,
 			EndTime:   p.EndTime,
 			Purpose:   p.Purpose,
+			Title:   p.Title,
 		}
 		db.Create(&a)
 		return c.Status(http.StatusOK).JSON(a)

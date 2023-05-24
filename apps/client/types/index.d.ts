@@ -34,6 +34,7 @@ export type Booking = {
   startTime: Date;
   endTime: Date;
   purpose: string;
+  title: string;
 };
 
 export interface DateInterface {

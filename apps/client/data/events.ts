@@ -3,8 +3,8 @@ import { CalendarEvent } from 'types';
 export const eventListPeer1: CalendarEvent[] = [
   {
     title: 'Santhita (project)',
-    start: new Date('2023-05-24T02:30:00.000Z'),
-    end: new Date('2023-05-24T03:30:00.000Z'),
+    start: new Date('2023-05-24T03:55:38.000Z'),
+    end: new Date('2023-05-24T04:30:00.000Z'),
   },
   {
     title: 'Sairoong jra',

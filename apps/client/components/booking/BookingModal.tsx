@@ -74,9 +74,10 @@ const BookingModal = (props: Props) => {
       startTime: new Date(startTime),
       endTime: new Date(endTime),
       purpose: usagePurpose.name,
+      title: `${user.studentId} (${usagePurpose.name})`,
     };
 
-    console.log(data.startTime.toISOString());
+    console.log(`${user.studentId} (${usagePurpose.name})`);
 
     fetch(`${url}/booking/create`, {
       method: 'POST',
