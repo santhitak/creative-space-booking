@@ -34,19 +34,21 @@ const people = [
 
 export function BookingHistory({ userData }: IProps) {
   const [user] = useState<User>(userData);
+  const url = process.env.LOCAL_BACKEND_URL;
   const [history, setHistory] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  // setLoading(true)
-  //   async function getBookingHistory() {
-  //     const response = await fetch(``);
-  //     const data = await response.json();
-  //     setHistory(data);
-  //setLoading(false)
-  //   }
-  //   getBookingHistory();
-  // });
+  useEffect(() => {
+    setLoading(true);
+    async function getBookingHistory() {
+      const response = await fetch(`${url}/booking/${user.studentId}/history`);
+      const data = await response.json();
+
+      setHistory(data);
+      setLoading(false);
+    }
+    getBookingHistory();
+  }, []);
 
   const room: RoomChoice[] = [
     { id: 1, name: 'Peer Tutor Room 1' },
@@ -67,43 +69,35 @@ export function BookingHistory({ userData }: IProps) {
   return (
     <Navbar userData={user}>
       <GridLayout>
-        <div className="min-h-[90vh] w-full flex justify-center">
+        <div className="min-h-[90vh] h-full w-full flex justify-center">
           {isLoading && <Loading />}
           {!isLoading && (
             <div className="flex justify-center w-full">
-              {history.length === 0 && (
+              {history.length !== 0 && (
                 <div className="mt-20 w-full flex flex-col gap-y-6 divide-y divide-gray-100">
                   <p className="font-semibold text-xl">Booking History</p>
                   <ul role="list" className="divide-y divide-gray-100 px-6">
-                    {people.map((person) => (
+                    {history.map((data) => (
                       <li
-                        key={person.id}
+                        key={data.id}
                         className="flex justify-between gap-x-6 py-5"
                       >
                         <div className="flex gap-x-4">
                           <div className="min-w-0 flex-auto">
                             <p className="text-sm  font-semibold leading-6 text-gray-900">
-                              {checkRoom(person.roomId)}
+                              {checkRoom(data.roomId)}
                             </p>
                             <p className="mt-1 truncate text-xs leading-5 text-gray-500">
                               Date:{' '}
-                              {person.startTime
-                                .slice(0, 10)
+                              {data.start
+                                ?.slice(0, 10)
                                 .split('-')
                                 .reverse()
                                 .join('/')}{' '}
                             </p>
                             <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                              Time:{' '}
-                              {new Date(person.startTime + '-0700')
-                                .toISOString()
-                                .split('T')[1]
-                                .slice(0, 5)}{' '}
-                              -{' '}
-                              {new Date(person.endTime + '-0700')
-                                .toISOString()
-                                .split('T')[1]
-                                .slice(0, 5)}
+                              Time: {data.start.split('T')[1].slice(0, 5)} -{' '}
+                              {data.end.split('T')[1].slice(0, 5)}
                             </p>
                           </div>
                         </div>
@@ -112,7 +106,7 @@ export function BookingHistory({ userData }: IProps) {
                   </ul>
                 </div>
               )}
-              {history.length !== 0 && (
+              {history.length === 0 && (
                 <div className="min-w-full flex flex-col gap-y-6">
                   <div className="flex justify-center items-center flex-col gap-y-2">
                     <p className="font-semibold text-gray-500">

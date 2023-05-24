@@ -39,7 +39,7 @@ const BookingModal = (props: Props) => {
   const [endTime, setEndTime] = useState('');
   const [usagePurpose, setUsagePurpose] = useState(purpose[0]);
 
-  const handleValidate = () => {
+  const handleValidate = (data: Booking) => {
     const time = {
       start: parseInt(startTime.split('T')[1].slice(0, 2)),
       end: parseInt(endTime.split('T')[1].slice(0, 2)),
@@ -60,14 +60,15 @@ const BookingModal = (props: Props) => {
     } else if (time.end - time.start > 2) {
       toast.error('Maximum booking is two hours');
       return false;
-    } else if (!usagePurpose) {
-      toast.error('Please fill up room booking purpose');
+    } else if (data.purpose === '') {
+      toast.error('Please select up room booking purpose');
       return false;
+    } else {
+      return true;
     }
   };
 
   const handleSubmit = () => {
-    handleValidate();
     const data: Booking = {
       roomId: room.id,
       studentId: user.studentId,
@@ -77,20 +78,20 @@ const BookingModal = (props: Props) => {
       title: `${user.studentId} (${usagePurpose.name})`,
     };
 
-    console.log(`${user.studentId} (${usagePurpose.name})`);
-
-    fetch(`${url}/booking/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.ok) {
-        toast.success('Create booking complete');
-        location.reload();
-      }
-    });
+    if (handleValidate(data)) {
+      fetch(`${url}/booking/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }).then((response) => {
+        if (response.ok) {
+          toast.success('Create booking complete');
+          location.reload();
+        }
+      });
+    }
   };
 
   return (
