@@ -5,10 +5,10 @@ import (
 )
 
 type User struct {
-	Id        string
-	Firstname string `gorm:"column:firstName"`
-	Lastname  string `gorm:"column:lastName"`
-	StudentID string `gorm:"column:studentId"`
+	Id        string `json:"userId"`
+	Firstname string `gorm:"column:firstName" json:"firstName"`
+	Lastname  string `gorm:"column:lastName" json:"lastName"`
+	StudentID string `gorm:"column:studentId" json:"studentId"`
 }
 
 type OAuthUser struct {
@@ -23,19 +23,19 @@ type OAuthUser struct {
 }
 
 type Room struct {
-	Id        string
-	Name      string   `gorm:"column:name"`
-	OpenTime  string   `gorm:"column:openTime"`
-	CloseTime string   `gorm:"column:closeTime"`
-	Booking   *Booking `gorm:"column:booking"`
+	Id        int      `json:"id"`
+	Name      string   `gorm:"column:name" json:"name"`
+	OpenTime  string   `gorm:"column:openTime" json:"openTime"`
+	CloseTime string   `gorm:"column:closeTime" json:"closeTime"`
+	Booking   *Booking `gorm:"column:booking" json:"booking"`
 }
 
 type Booking struct {
-	Id        string
-	RoomId    string    `gorm:"column:roomId"`
-	StudentID string    `gorm:"column:studentId"`
-	StartTime string    `gorm:"column:startTime"`
-	EndTime   string    `gorm:"column:endTime"`
-	Purpose   string    `gorm:"column:purpose"`
-	CreatedAt time.Time `gorm:"column:createdAt"`
+	Id        string    `json:"id"`
+	RoomId    string    `gorm:"column:roomId" json:"roomId"`
+	StudentID string    `gorm:"column:studentId" json:"studentId"`
+	StartTime string    `gorm:"column:startTime" json:"startTime"`
+	EndTime   string    `gorm:"column:endTime" json:"endTime"`
+	Purpose   string    `gorm:"column:purpose" json:"purpose"`
+	CreatedAt time.Time `gorm:"column:createdAt" json:"createdAt"`
 }
