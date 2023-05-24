@@ -24,15 +24,13 @@ export type CalendarEvent = {
   title: string;
   start: Date;
   end: Date;
-  allDay?: boolean;
-  resource?: unknown;
 };
 
 export type Booking = {
   roomId: number;
   studentId: string;
-  startTime: Date;
-  endTime: Date;
+  start: Date;
+  end: Date;
   purpose: string;
   title: string;
 };

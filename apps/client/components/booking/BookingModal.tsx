@@ -72,8 +72,8 @@ const BookingModal = (props: Props) => {
     const data: Booking = {
       roomId: room.id,
       studentId: user.studentId,
-      startTime: new Date(startTime),
-      endTime: new Date(endTime),
+      start: new Date(startTime),
+      end: new Date(endTime),
       purpose: usagePurpose.name,
       title: `${user.studentId} (${usagePurpose.name})`,
     };

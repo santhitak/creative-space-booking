@@ -1,13 +1,6 @@
-import { DateInterface, Room, User } from 'types';
+import { Booking, DateInterface, Room, User } from 'types';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import {
-  eventListCreative,
-  eventListCreative2,
-  eventListPeer1,
-  eventListPeer2,
-  eventListPeer3,
-} from 'data/events';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useEffect, useState } from 'react';
 import BookingModal from './BookingModal';
@@ -21,11 +14,10 @@ interface Props {
 const ScheduleView = ({ room, userData }: Props) => {
   const url = process.env.LOCAL_BACKEND_URL;
   const date = new Date();
-  const [user, setUser] = useState<User>(userData);
+  const [user] = useState<User>(userData);
   const [openBooking, setOpenBooking] = useState(false);
-  const [currentDateShow, setCurrentDateShow] = useState(false);
+  const [currentDateShow] = useState(false);
   const [booking, setBooking] = useState([]);
-  const [bookingNew, setBookingNew] = useState([]);
   const dateMoment: DateInterface = {
     todayMoment: moment(),
     tomorrowMoment: moment().clone().add(1, 'days'),
@@ -33,20 +25,17 @@ const ScheduleView = ({ room, userData }: Props) => {
     tomorrow: moment().clone().add(1, 'days').format('LL'),
   };
 
-  console.log(bookingNew);
   useEffect(() => {
     async function getBooking() {
       const response = await fetch(`${url}/booking/all/${room.id}`);
       const data = await response.json();
 
-      setBooking(data);
-
-      const arr = data.map((v) => ({
+      const arr = data.map((v: Booking) => ({
         start: new Date(v.start),
         end: new Date(v.end),
-        title: `${v.studentId} (${v.purpose}) `,
+        title: `Booked for ${v.purpose}`,
       }));
-      setBookingNew(arr);
+      setBooking(arr);
     }
 
     getBooking();
@@ -84,7 +73,7 @@ const ScheduleView = ({ room, userData }: Props) => {
           <div className="flex">
             <Calendar
               localizer={localizer}
-              events={bookingNew}
+              events={booking}
               defaultView="day"
               startAccessor="start"
               endAccessor="end"
