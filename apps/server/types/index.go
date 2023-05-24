@@ -32,7 +32,7 @@ type Room struct {
 
 type Booking struct {
 	Id        string    `json:"id"`
-	RoomId    string    `gorm:"column:roomId" json:"roomId"`
+	RoomId    int       `gorm:"column:roomId" json:"roomId"`
 	StudentID string    `gorm:"column:studentId" json:"studentId"`
 	StartTime string    `gorm:"column:startTime" json:"startTime"`
 	EndTime   string    `gorm:"column:endTime" json:"endTime"`

@@ -11,6 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/google/uuid"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/markbates/goth"
@@ -74,7 +75,43 @@ func main() {
 	})
 
 	bookingRoute.Add("GET", "/room", routes.GetAllRoom())
-	bookingRoute.Add("POST", "/create", routes.HandlerAddBooking("63070175", "1", "1980-01-01T00:00:00.000Z", "1980-01-01T02:00:00.000Z", "Homeword"))
+	bookingRoute.Add("POST", "/create", func(c *fiber.Ctx) error {
+		db, err := gorm.Open(mysql.Open(os.Getenv("DATABASE_USERNAME")+":"+os.Getenv("DATABASE_PASSWORD")+"@tcp"+"("+os.Getenv("DATABASE_HOST")+")"+"/"+os.Getenv("DATABSE_NAME")+"?tls=true"), &gorm.Config{TranslateError: true})
+		if err != nil {
+			panic("failed to connect to database")
+		}
+		token := uuid.New().String()
+		p := struct {
+			RoomId    int    `json:"roomId"`
+			StudentID string `json:"studentId"`
+			StartTime string `json:"startTime"`
+			EndTime   string `json:"endTime"`
+			Purpose   string `json:"purpose"`
+		}{}
+		if err := c.BodyParser(&p); err != nil {
+			return err
+		}
+		a := types.Booking{
+			Id:        token,
+			RoomId:    p.RoomId,
+			StudentID: p.StudentID,
+			StartTime: p.StartTime,
+			EndTime:   p.EndTime,
+			Purpose:   p.Purpose,
+		}
+		db.Create(&a)
+		return c.Status(http.StatusOK).JSON(a)
 
+	})
+	bookingRoute.Add("GET", "/:id/history", func(c *fiber.Ctx) error {
+		list := []types.Booking{}
+		db, err := gorm.Open(mysql.Open(os.Getenv("DATABASE_USERNAME")+":"+os.Getenv("DATABASE_PASSWORD")+"@tcp"+"("+os.Getenv("DATABASE_HOST")+")"+"/"+os.Getenv("DATABSE_NAME")+"?tls=true"), &gorm.Config{TranslateError: true})
+		if err != nil {
+			panic("failed to connect to database")
+		}
+		db.Table("bookings").Where("studentId = ?", c.Params("id")).Scan(&list)
+
+		return c.Status(http.StatusOK).JSON(list)
+	})
 	log.Fatal(app.Listen(":8000"))
 }
