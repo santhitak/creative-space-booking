@@ -113,5 +113,15 @@ func main() {
 
 		return c.Status(http.StatusOK).JSON(list)
 	})
+	bookingRoute.Add("GET", "/all/:roomId", func(c *fiber.Ctx) error {
+		list := []types.Booking{}
+		db, err := gorm.Open(mysql.Open(os.Getenv("DATABASE_USERNAME")+":"+os.Getenv("DATABASE_PASSWORD")+"@tcp"+"("+os.Getenv("DATABASE_HOST")+")"+"/"+os.Getenv("DATABSE_NAME")+"?tls=true"), &gorm.Config{TranslateError: true})
+		if err != nil {
+			panic("failed to connect to database")
+		}
+		db.Table("bookings").Where("roomId = ?", c.Params("roomId")).Scan(&list)
+
+		return c.Status(http.StatusOK).JSON(list)
+	})
 	log.Fatal(app.Listen(":8000"))
 }
