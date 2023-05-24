@@ -5,6 +5,8 @@ import { useState } from 'react';
 
 interface Props {
   purpose: RadioChoice[];
+  usagePurpose: RadioChoice;
+  setUsagePurpose: (value: RadioChoice) => void;
 }
 
 const PurposeRadio = (props: Props) => {

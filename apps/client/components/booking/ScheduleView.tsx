@@ -1,4 +1,4 @@
-import { DateInterface, Room } from 'types';
+import { DateInterface, Room, User } from 'types';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import {
@@ -15,11 +15,12 @@ const localizer = momentLocalizer(moment);
 
 interface Props {
   room: Room;
+  userData: User;
 }
 
-const ScheduleView = ({ room }: Props) => {
+const ScheduleView = ({ room, userData }: Props) => {
   const date = new Date();
-  console.log(room);
+  const [user, setUser] = useState<User>(userData);
   const [openBooking, setOpenBooking] = useState(false);
   const [currentDateShow, setCurrentDateShow] = useState(false);
   const dateMoment: DateInterface = {
@@ -58,7 +59,7 @@ const ScheduleView = ({ room }: Props) => {
             <p className="font-medium">{room?.name}</p>
             <div className="pl-4">
               <button
-                className="bg-blue-700 px-4 py-2 text-white rounded-md"
+                className="bg-blue-800 px-4 py-2 text-white rounded-md"
                 onClick={() => {
                   setOpenBooking(true);
                 }}
@@ -91,6 +92,7 @@ const ScheduleView = ({ room }: Props) => {
           setOpen={setOpenBooking}
           room={room}
           dateMoment={dateMoment}
+          userData={user}
         />
       </div>
     </div>
