@@ -1,92 +1,48 @@
 package routes
 
 import (
-	"co-working-space/prisma/db"
-	"context"
-	"encoding/json"
+	"co-working-space/apps/server/types"
 	"fmt"
-	"log"
+	"net/http"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 func GetAllRoom() fiber.Handler {
-  return func(ctx *fiber.Ctx) error {
-		client := db.NewClient()
-    if err := client.Prisma.Connect(); err != nil {
-        return err
-    }
-
-    defer func() {
-        if err := client.Prisma.Disconnect(); err != nil {
-            panic(err)
-        }
-    }()
-
-		c := context.Background()
-
-		rooms, err := client.Room.FindMany(
-				db.Room.Name.Contains("Room"),
-		).Exec(c)
-
+	return func(ctx *fiber.Ctx) error {
+		list := []types.Room{}
+		db, err := gorm.Open(mysql.Open(os.Getenv("DATABASE_USERNAME")+":"+os.Getenv("DATABASE_PASSWORD")+"@tcp"+"("+os.Getenv("DATABASE_HOST")+")"+"/"+os.Getenv("DATABSE_NAME")+"?tls=true"), &gorm.Config{TranslateError: true})
 		if err != nil {
-        return err
-    }
+			panic("failed to connect to database")
+		}
+		db.Table("Room").Scan(&list)
 
-		log.Printf("rooms: %+v", rooms)
-		return ctx.JSON(rooms)
+		return ctx.Status(http.StatusOK).JSON(list)
 	}
 }
 
-func HandlerAddBooking(studentId string) error {
-	client := db.NewClient()
-	if err := client.Prisma.Connect(); err != nil {
-		return err
-	}
-
-	defer func() {
-		if err := client.Prisma.Disconnect(); err != nil {
-			panic(err)
-		}
-	}()
-
-	ctx := context.Background()
-
-	// user, err := client.User.FindUnique(
-  //   db.User.StudentID.Equals(studentId),
-	// ).Exec(ctx)
-	// if err != nil {
-	// 	return err
-	// }
-
-	// room, err := client.Room.FindUnique(
-  //   db.Room.ID.Equals(roomId),
-	// ).Exec(ctx)
-	// if err != nil {
-	// 	return err
-	// }
-
-	// created, err := client.Booking.CreateOne(
-  //       db.Booking.StudentID.Set(studentId),
-  //       db.Booking.StartTime.Set(startTime),
-  //       db.Booking.EndTime.Set(endTime),
-  //       db.Booking.Purpose.Set(purpose),
-  //       db.Booking.RoomID.Set(room.roomId),
-  //   ).Exec(ctx)
-  //   if err != nil {
-  //       return err
-  //   }
-
-	booking, err := client.Booking.FindMany(
-    db.Booking.StudentID.Equals(studentId	),
-).Exec(ctx)
-
-	result, _ := json.MarshalIndent(booking, "", "  ")
-
-	fmt.Printf("find booking: %s\n", result)
+func HandlerAddBooking(studentId string, roomId string, startTime string, endTime string, purpose string) fiber.Handler {
+	db, err := gorm.Open(mysql.Open(os.Getenv("DATABASE_USERNAME")+":"+os.Getenv("DATABASE_PASSWORD")+"@tcp"+"("+os.Getenv("DATABASE_HOST")+")"+"/"+os.Getenv("DATABSE_NAME")+"?tls=true"), &gorm.Config{TranslateError: true})
 	if err != nil {
-		return err
+		panic("failed to connect to database")
 	}
+	token := uuid.New().String()
+	a := types.Booking{
+		Id:        token,
+		RoomId:    roomId,
+		StudentID: studentId,
+		StartTime: startTime,
+		EndTime:   endTime,
+		Purpose:   purpose,
+	}
+	db.Create(&a)
 
-	return err
+	return func(c *fiber.Ctx) error {
+		fmt.Println(c.Body())
+		return c.Status(http.StatusOK).JSON(a)
+	}
 }

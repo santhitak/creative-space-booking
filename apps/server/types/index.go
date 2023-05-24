@@ -1,10 +1,14 @@
 package types
 
+import (
+	"time"
+)
+
 type User struct {
-	Token     string `json:"token"`
-	StudentID string `json:"studentId"`
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
+	Id        string
+	Firstname string `gorm:"column:firstName"`
+	Lastname  string `gorm:"column:lastName"`
+	StudentID string `gorm:"column:studentId"`
 }
 
 type OAuthUser struct {
@@ -19,13 +23,19 @@ type OAuthUser struct {
 }
 
 type Room struct {
-	title   string
-	booking Booking
+	Id        string
+	Name      string   `gorm:"column:name"`
+	OpenTime  string   `gorm:"column:openTime"`
+	CloseTime string   `gorm:"column:closeTime"`
+	Booking   *Booking `gorm:"column:booking"`
 }
 
 type Booking struct {
-	userId    string
-	date      string
-	startTime string
-	endTime   string
+	Id        string
+	RoomId    string    `gorm:"column:roomId"`
+	StudentID string    `gorm:"column:studentId"`
+	StartTime string    `gorm:"column:startTime"`
+	EndTime   string    `gorm:"column:endTime"`
+	Purpose   string    `gorm:"column:purpose"`
+	CreatedAt time.Time `gorm:"column:createdAt"`
 }
