@@ -9,7 +9,7 @@ import {
   eventListPeer3,
 } from 'data/events';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BookingModal from './BookingModal';
 const localizer = momentLocalizer(moment);
 
@@ -19,16 +19,30 @@ interface Props {
 }
 
 const ScheduleView = ({ room, userData }: Props) => {
+  const url = process.env.LOCAL_BACKEND_URL;
   const date = new Date();
   const [user, setUser] = useState<User>(userData);
   const [openBooking, setOpenBooking] = useState(false);
   const [currentDateShow, setCurrentDateShow] = useState(false);
+  const [booking, setBooking] = useState([]);
   const dateMoment: DateInterface = {
     todayMoment: moment(),
     tomorrowMoment: moment().clone().add(1, 'days'),
     today: moment().format('LL'),
     tomorrow: moment().clone().add(1, 'days').format('LL'),
   };
+
+  useEffect(() => {
+    async function getBooking() {
+      const response = await fetch(`${url}/booking/all/${room.id}`);
+      const data = await response.json();
+
+      setBooking(data);
+      console.log(data);
+    }
+
+    getBooking();
+  }, [room.id]);
 
   const eventData =
     room.name === 'Peer Tutor Room 1'
@@ -73,7 +87,7 @@ const ScheduleView = ({ room, userData }: Props) => {
           <div className="flex">
             <Calendar
               localizer={localizer}
-              events={eventData}
+              events={booking}
               defaultView="day"
               startAccessor="start"
               endAccessor="end"

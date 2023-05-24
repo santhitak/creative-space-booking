@@ -1,6 +1,5 @@
 export type User = {
   userId?: string;
-  email?: string;
   studentId?: string;
   firstName?: string;
   lastName?: string;
@@ -32,10 +31,9 @@ export type CalendarEvent = {
 export type Booking = {
   roomId: number;
   studentId: string;
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  endTime: Date;
   purpose: string;
-  createdAt: Date;
 };
 
 export interface DateInterface {

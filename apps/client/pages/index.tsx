@@ -1,6 +1,6 @@
 import { Cases, Hero } from '@/components/home';
 import { Footer, Navbar } from '@/components/shared';
-import { getCookies } from 'cookies-next';
+import { getCookie, getCookies } from 'cookies-next';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { useState } from 'react';
 import { User } from 'types';

@@ -19,11 +19,8 @@ const BookingPage = ({ userData }: IProps) => {
       const response = await fetch(`${url}/booking/room`);
       setRoom(await response.json());
     }
-    try {
-      fetchData();
-    } catch (error) {
-      console.log(error);
-    }
+
+    fetchData();
   }, []);
 
   return (

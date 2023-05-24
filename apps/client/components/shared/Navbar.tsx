@@ -26,7 +26,7 @@ const Navbar = ({ children, userData }: Props) => {
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Room Observation', href: '/booking' },
+    { name: 'Booking', href: '/booking' },
     { name: 'History', href: '/booking-history' },
   ];
 
@@ -38,7 +38,7 @@ const Navbar = ({ children, userData }: Props) => {
 
   return (
     <div>
-      <div className="w-full h-18 sticky top-0 bg-[#f3f3f3] shadow-md">
+      <div className="z-20 w-full h-18 sticky top-0 bg-[#f3f3f3] shadow-md">
         <GridLayout>
           <div className="py-4 flex justify-between items-center">
             <Link href="/">
